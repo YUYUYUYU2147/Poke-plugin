@@ -1,7 +1,7 @@
 # 👆 戳戳榜插件（Poke-plugin）
 
 [![Version](https://img.shields.io/badge/-Node.js-3C873A?style=flat&logo=Node.js&logoColor=white)](https://nodejs.org)
-[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/your-username/Poke-plugin)
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://github.com/your-username/Poke-plugin)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Yunzai-Bot](https://img.shields.io/badge/Yunzai--Bot-Plugin-orange.svg)](https://github.com/Le-niao/Yunzai-Bot)
 [![Yunzai-Bot](https://img.shields.io/badge/Miao--Yunzai-V3-orange.svg)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
