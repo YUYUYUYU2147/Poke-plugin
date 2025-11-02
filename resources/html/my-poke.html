@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>我的戳戳统计</title>
+  <style>
+    body {
+      background: #f7f7f7;
+      font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .mypoke-container {
+      width: 400px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px 24px 24px 24px;
+      text-align: center;
+    }
+    .mypoke-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 24px;
+    }
+    .mypoke-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 18px 0;
+      font-size: 20px;
+    }
+    .mypoke-label {
+      color: #888;
+    }
+    .mypoke-value {
+      color: #d19f56;
+      font-weight: bold;
+      font-size: 22px;
+    }
+    .mypoke-nickname {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .mypoke-footer {
+      margin-top: 16px;
+      padding-top: 8px;
+      border-top: 1px solid #e4e9f0;
+      color: #a0aec0;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      background: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="mypoke-container">
+    <div class="mypoke-title">戳戳统计</div>
+    <div class="mypoke-nickname">{{ nickname }}</div>
+    <div class="mypoke-row">
+      <span class="mypoke-label">戳别人</span>
+      <span class="mypoke-value">{{ pokeCount }} 次</span>
+    </div>
+    <div class="mypoke-row">
+      <span class="mypoke-label">被戳</span>
+      <span class="mypoke-value">{{ bePokedCount }} 次</span>
+    </div>
+    <div class="mypoke-footer">
+      <span>生成时间：{{ generateTime }} | Poke-plugin v{{ version }}</span>
+    </div>
+  </div>
+</body>
+</html> 

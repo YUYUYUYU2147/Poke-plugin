@@ -1,0 +1,19 @@
+{
+  "name": "poke-plugin",
+  "version": "1.0.2",
+  "description": "统计群成员戳一戳行为，支持排行榜，适配锅巴平台配置管理。",
+  "author": "@QingYing <https://gitee.com/tttfff>",
+  "license": "MIT",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "yunzai",
+    "poke",
+    "排行榜",
+    "戳一戳"
+  ],
+  "dependencies": {
+    "handlebars": "^4.7.8",
+    "js-yaml": "^4.1.0"
+  }
+}

@@ -1,0 +1,31 @@
+# Poke-plugin 默认配置文件
+# 此文件为默认配置，用户配置请修改 config.yaml
+
+poke:
+  # 榜单输出类型：text | image
+  rankOutputType: image
+  
+  # 数据保留天数，0为永久保存
+  expireDay: 0
+  
+  # 榜单长度限制
+  defaultRankLimit: 15
+
+  # 是否忽略自己戳自己
+  ignoreSelfPoke: true
+
+# 忽略列表
+pokeIgnored_list: []
+
+render:
+  # 榜单图片宽度
+  rankWidth: 600
+  
+  # 个人统计图片宽度
+  myPokeWidth: 500
+  
+  # 是否启用模板缓存
+  cacheEnabled: true
+  
+  # 缓存过期时间（毫秒）
+  cacheExpire: 300000 
