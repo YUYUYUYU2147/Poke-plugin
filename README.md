@@ -1,11 +1,8 @@
 # 👆 戳戳榜插件（Poke-plugin）
 
-[![Version](https://img.shields.io/badge/-Node.js-3C873A?style=flat&logo=Node.js&logoColor=white)](https://nodejs.org)
-[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://github.com/your-username/Poke-plugin)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Yunzai-Bot](https://img.shields.io/badge/Yunzai--Bot-Plugin-orange.svg)](https://github.com/Le-niao/Yunzai-Bot)
-[![Yunzai-Bot](https://img.shields.io/badge/Miao--Yunzai-V3-orange.svg)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
-[![Yunzai-Bot](https://img.shields.io/badge/TRSS--Yunzai-V3-orange.svg)](https://github.com/TimeRainStarSky/Yunzai)
+[![star](https://gitee.com/qingyingxbot/Poke-plugin/badge/star.svg?theme=gray)](https://gitee.com/qingyingxbot/Poke-plugin/stargazers)
+[![version](https://img.shields.io/badge/version-1.0.2-white)](https://gitee.com/qingyingxbot/Poke-plugin/releases)
+[![license](https://img.shields.io/badge/license-MIT-white)](https://gitee.com/qingyingxbot/Poke-plugin/blob/master/LICENSE)
 
 
 - 一个功能丰富的戳一戳统计插件，支持多维度排行榜、个人统计、图片渲染等功能
@@ -31,7 +28,7 @@
 # 进入Yunzai-Bot根目录
 cd Yunzai
 # 克隆插件仓库
-git clone https://gitee.com/tttfff/poke-plugin.git ./plugins/Poke-plugin/
+git clone https://gitee.com/qingyingxbot/Poke-plugin.git ./plugins/Poke-plugin/
 # 安装依赖
 cd plugins/Poke-plugin && pnpm install
 ```
@@ -176,7 +173,7 @@ Poke-plugin/
 ---
 
 ## 🤝 反馈与贡献
-- 欢迎提交 [Issue](https://gitee.com/tttfff/Poke-plugin/issues) 反馈问题或建议
+- 欢迎提交 [Issue](https://gitee.com/qingyingxbot/Poke-plugin/issues) 反馈问题或建议
 - 欢迎PR贡献代码，完善功能
 
 ---
