@@ -2,7 +2,7 @@
   "name": "poke-plugin",
   "version": "1.0.2",
   "description": "统计群成员戳一戳行为，支持排行榜，适配锅巴平台配置管理。",
-  "author": "@QingYing <https://gitee.com/tttfff>",
+  "author": "@QingYingX <https://gitee.com/QingYingX>",
   "license": "MIT",
   "main": "index.js",
   "type": "module",
