@@ -1,12 +1,11 @@
 # 👆 戳戳榜插件（Poke-plugin）
 
 [![star](https://gitee.com/qingyingxbot/Poke-plugin/badge/star.svg?theme=gray)](https://gitee.com/qingyingxbot/Poke-plugin/stargazers)
-[![version](https://img.shields.io/badge/version-1.0.2-white)](https://gitee.com/qingyingxbot/Poke-plugin/releases)
+[![version](https://img.shields.io/badge/version-1.0.3-white)](https://gitee.com/qingyingxbot/Poke-plugin/releases)
 [![license](https://img.shields.io/badge/license-MIT-white)](https://gitee.com/qingyingxbot/Poke-plugin/blob/master/LICENSE)
 
 
 - 一个功能丰富的戳一戳统计插件，支持多维度排行榜、个人统计、图片渲染等功能
-- **请注意此插件ICQQ登陆的Bot无法使用**
 
 ## 📖 简介
 

@@ -60,15 +60,61 @@ async function getUserNickname(userId, group, user) {
 async function handlePokeEvent(e, logger) {
   try {
     const groupId = e.group_id
-    const userId = e.user_id
     const targetId = e.target_id || e.target?.user_id || e.target || e.to_id
-    if (!groupId || !userId || !targetId) return logger?.warn?.('[Poke-plugin] 事件数据不完整:', { groupId, userId, targetId })
+    
+    // 支持 oicq 的 operator_id 字段（戳人的人），兼容 ICQQ 的 user_id
+    // 注意：在 oicq 中，如果 operator_id 不存在，user_id 可能等于 target_id（被戳的人）
+    // 因此需要检查：如果 user_id === target_id，不能使用 user_id 作为戳人者
+    let userId = e.operator_id
+    if (!userId && e.user_id) {
+      // 只有当 user_id 不等于 target_id 时，才使用 user_id 作为戳人者
+      if (String(e.user_id) !== String(targetId)) {
+        userId = e.user_id
+      }
+    }
+    
+    if (!groupId || !userId || !targetId) {
+      return logger?.warn?.('[Poke-plugin] 事件数据不完整，无法确定戳人者:', {
+        groupId,
+        userId: userId || '未确定',
+        targetId,
+        operator_id: e.operator_id,
+        user_id: e.user_id,
+        target_id: e.target_id,
+        reason: !userId ? '无法确定戳人者（operator_id 不存在且 user_id === target_id）' : '缺少必要字段',
+        rawEvent: {
+          group_id: e.group_id,
+          user_id: e.user_id,
+          operator_id: e.operator_id,
+          target_id: e.target_id,
+          sub_type: e.sub_type,
+          notice_type: e.notice_type,
+          adapter: e.adapter_name || e.adapter_id || 'unknown'
+        }
+      })
+    }
     const eventKey = generateEventKey(groupId, userId, targetId, Date.now())
     if (isDuplicateEvent(eventKey)) return logger?.debug?.('[Poke-plugin] 忽略重复事件:', eventKey)
-    const nickname = await getUserNickname(userId, e.group, e.sender)
+    // 对于戳人者，不依赖 e.sender（可能指向错误的人），直接通过 group.pickMember 获取
+    const nickname = await getUserNickname(userId, e.group, null)
+    // 对于被戳者，e.target 应该是正确的
     const targetNickname = await getUserNickname(targetId, e.group, e.target)
     const eventData = { groupId, userId, nickname, targetId, targetNickname, timestamp: Date.now() }
-    if (await shouldFilterEvent(eventData)) return logger?.debug?.('[Poke-plugin] 事件被过滤:', eventData)
+    if (await shouldFilterEvent(eventData)) {
+      return logger?.debug?.('[Poke-plugin] 事件被过滤:', {
+        ...eventData,
+        rawEvent: {
+          group_id: e.group_id,
+          user_id: e.user_id,
+          operator_id: e.operator_id,
+          target_id: e.target_id,
+          sub_type: e.sub_type,
+          notice_type: e.notice_type,
+          adapter: e.adapter_name || e.adapter_id || 'unknown'
+        },
+        filterReason: userId === targetId ? '自己戳自己（ignoreSelfPoke=true）' : '其他过滤规则'
+      })
+    }
     await pokeStore.recordPoke(eventData)
     
     // 获取并显示用户统计信息

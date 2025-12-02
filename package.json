@@ -1,6 +1,6 @@
 {
   "name": "poke-plugin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "统计群成员戳一戳行为，支持排行榜，适配锅巴平台配置管理。",
   "author": "@QingYingX <https://gitee.com/QingYingX>",
   "license": "MIT",
