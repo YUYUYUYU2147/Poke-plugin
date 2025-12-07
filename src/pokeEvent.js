@@ -1,5 +1,6 @@
 import * as pokeStore from './pokeStore.js'
 import { getConfigItem } from '../config/config.js'
+import util from 'node:util'
 
 const eventCache = new Map()
 const CACHE_EXPIRE = 5000
@@ -59,6 +60,14 @@ async function getUserNickname(userId, group, user) {
 
 async function handlePokeEvent(e, logger) {
   try {
+    // 对齐 miao-plugin 的处理逻辑：在 group 状态下，如果 user_id === self_id，使用 operator_id 作为戳人者
+    const self_id = e.self_id || e.bot?.uin || (typeof Bot !== 'undefined' ? Bot.uin : undefined)
+    if (e.notice_type === 'group' && self_id) {
+      // group状态下，戳一戳的发起人是operator
+      // 如果机器人戳别人，user_id 会是机器人的 ID，此时应该使用 operator_id 作为戳人者
+      if (e.user_id === self_id) e.user_id = e.operator_id
+    }
+    
     const groupId = e.group_id
     const targetId = e.target_id || e.target?.user_id || e.target || e.to_id
     
@@ -74,7 +83,7 @@ async function handlePokeEvent(e, logger) {
     }
     
     if (!groupId || !userId || !targetId) {
-      return logger?.warn?.('[Poke-plugin] 事件数据不完整，无法确定戳人者:', {
+      const warnData = {
         groupId,
         userId: userId || '未确定',
         targetId,
@@ -91,7 +100,8 @@ async function handlePokeEvent(e, logger) {
           notice_type: e.notice_type,
           adapter: e.adapter_name || e.adapter_id || 'unknown'
         }
-      })
+      }
+      return logger?.warn?.('[Poke-plugin] 事件数据不完整，无法确定戳人者:', util.inspect(warnData, { depth: 5, colors: false }))
     }
     const eventKey = generateEventKey(groupId, userId, targetId, Date.now())
     if (isDuplicateEvent(eventKey)) return logger?.debug?.('[Poke-plugin] 忽略重复事件:', eventKey)
@@ -101,7 +111,30 @@ async function handlePokeEvent(e, logger) {
     const targetNickname = await getUserNickname(targetId, e.group, e.target)
     const eventData = { groupId, userId, nickname, targetId, targetNickname, timestamp: Date.now() }
     if (await shouldFilterEvent(eventData)) {
-      return logger?.debug?.('[Poke-plugin] 事件被过滤:', {
+      // 确定具体的过滤原因
+      const filterConfig = await getConfigItem('poke.filter', {})
+      let filterReason = '未知原因'
+      if (filterConfig.ignoreSelfPoke !== false && String(userId) === String(targetId)) {
+        filterReason = '自己戳自己（ignoreSelfPoke=true）'
+      } else if (filterConfig.ignoredUsers && Array.isArray(filterConfig.ignoredUsers)) {
+        if (filterConfig.ignoredUsers.includes(String(userId)) || filterConfig.ignoredUsers.includes(String(targetId))) {
+          filterReason = `用户被忽略（ignoredUsers: ${filterConfig.ignoredUsers.includes(String(userId)) ? userId : targetId}）`
+        }
+      } else if (filterConfig.ignoredGroups && Array.isArray(filterConfig.ignoredGroups)) {
+        if (filterConfig.ignoredGroups.includes(String(groupId))) {
+          filterReason = `群组被忽略（ignoredGroups: ${groupId}）`
+        }
+      } else if (filterConfig.timeRange) {
+        const now = new Date()
+        const hour = now.getHours()
+        if (filterConfig.timeRange.start !== undefined && hour < filterConfig.timeRange.start) {
+          filterReason = `时间范围过滤（当前时间 ${hour} 时 < 开始时间 ${filterConfig.timeRange.start} 时）`
+        } else if (filterConfig.timeRange.end !== undefined && hour > filterConfig.timeRange.end) {
+          filterReason = `时间范围过滤（当前时间 ${hour} 时 > 结束时间 ${filterConfig.timeRange.end} 时）`
+        }
+      }
+      
+      const filterData = {
         ...eventData,
         rawEvent: {
           group_id: e.group_id,
@@ -112,8 +145,9 @@ async function handlePokeEvent(e, logger) {
           notice_type: e.notice_type,
           adapter: e.adapter_name || e.adapter_id || 'unknown'
         },
-        filterReason: userId === targetId ? '自己戳自己（ignoreSelfPoke=true）' : '其他过滤规则'
-      })
+        filterReason
+      }
+      return logger?.debug?.('[Poke-plugin] 事件被过滤:', util.inspect(filterData, { depth: 5, colors: false }))
     }
     await pokeStore.recordPoke(eventData)
     
@@ -127,7 +161,7 @@ async function handlePokeEvent(e, logger) {
       ])
       
       const totalPokeCount = groupPokeCount + groupBePokedCount
-      logger?.info?.('[Poke-plugin] 戳一戳事件记录成功:', {
+      const logData = {
         '群号': groupId,
         '戳人ID': `${userId}(${nickname})`,
         '被戳人ID': `${targetId}(${targetNickname})`,
@@ -137,15 +171,17 @@ async function handlePokeEvent(e, logger) {
         '全局戳别人数': globalPokeCount,
         '全局被戳数': globalBePokedCount,
         '全局总戳数': globalPokeCount + globalBePokedCount
-      })
+      }
+      logger?.info?.('[Poke-plugin] 戳一戳事件记录成功:', util.inspect(logData, { depth: 5, colors: false }))
     } catch (statError) {
       logger?.warn?.('[Poke-plugin] 获取用户统计信息失败:', statError)
       // 如果统计信息获取失败，至少记录基本事件信息
-      logger?.info?.('[Poke-plugin] 戳一戳事件记录成功:', {
+      const logData = {
         '群号': groupId,
         '戳人ID': `${userId}(${nickname})`,
         '被戳人ID': `${targetId}(${targetNickname})`
-      })
+      }
+      logger?.info?.('[Poke-plugin] 戳一戳事件记录成功:', util.inspect(logData, { depth: 5, colors: false }))
     }
   } catch (error) {
     logger?.error?.('[Poke-plugin] 处理戳一戳事件失败:', error)

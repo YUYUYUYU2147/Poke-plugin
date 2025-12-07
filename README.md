@@ -1,7 +1,7 @@
 # 👆 戳戳榜插件（Poke-plugin）
 
 [![star](https://gitee.com/qingyingxbot/Poke-plugin/badge/star.svg?theme=gray)](https://gitee.com/qingyingxbot/Poke-plugin/stargazers)
-[![version](https://img.shields.io/badge/version-1.0.3-white)](https://gitee.com/qingyingxbot/Poke-plugin/releases)
+[![version](https://img.shields.io/badge/version-1.0.4-white)](https://gitee.com/qingyingxbot/Poke-plugin/releases)
 [![license](https://img.shields.io/badge/license-MIT-white)](https://gitee.com/qingyingxbot/Poke-plugin/blob/master/LICENSE)
 
 
