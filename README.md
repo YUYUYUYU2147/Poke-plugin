@@ -1,18 +1,20 @@
+![Poke-plugin](https://socialify.git.ci/QingYingX-Bot/Poke-plugin/image?description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit+Board&pulls=1&stargazers=1&theme=Dark)
+
 # 👆 戳戳榜插件（Poke-plugin）
 
-[![star](https://gitee.com/qingyingxbot/Poke-plugin/badge/star.svg?theme=gray)](https://gitee.com/qingyingxbot/Poke-plugin/stargazers)
-[![version](https://img.shields.io/badge/version-1.0.4-white)](https://gitee.com/qingyingxbot/Poke-plugin/releases)
-[![license](https://img.shields.io/badge/license-MIT-white)](https://gitee.com/qingyingxbot/Poke-plugin/blob/master/LICENSE)
+**✨ Yunzai-Bot 戳一戳统计插件，支持多维度排行榜、个人统计、图片渲染等功能！**
 
+> 插件 by QingYing & AI
 
-- 一个功能丰富的戳一戳统计插件，支持多维度排行榜、个人统计、图片渲染等功能
+---
 
-## 📖 简介
+## 📦 简介
 
- Poke-plugin 是一个专为 Yunzai-Bot 设计的戳一戳统计插件，能够自动记录群内成员的戳一戳行为，并提供丰富的统计功能和美观的图片输出。
-> QQ群：822074453
+Poke-plugin 是一个专为 Yunzai-Bot 设计的戳一戳统计插件，能够自动记录群内成员的戳一戳行为，并提供丰富的统计功能和美观的图片输出。
 
-### ✨ 主要特性
+---
+
+## 🌟 功能特点
 
 - **多维度统计**：支持群内/全局、今日/总榜、戳别人/被戳等信息统计
 - **美观输出**：支持文本和图片两种输出模式，图片渲染美观现代
@@ -23,13 +25,25 @@
 ---
 
 ## 🚀 安装方法
+
+### 1. 克隆仓库
+
+#### Gitee（国内推荐）
+
 ```bash
-# 进入Yunzai-Bot根目录
-cd Yunzai
-# 克隆插件仓库
 git clone https://gitee.com/qingyingxbot/Poke-plugin.git ./plugins/Poke-plugin/
-# 安装依赖
-cd plugins/Poke-plugin && pnpm install
+```
+
+#### GitHub
+
+```bash
+git clone https://github.com/QingYingX-Bot/Poke-plugin.git ./plugins/Poke-plugin/
+```
+
+### 2. 安装依赖
+
+```bash
+pnpm install --filter=Poke-plugin
 ```
 
 ---
@@ -171,14 +185,10 @@ Poke-plugin/
 
 ---
 
-## 🤝 反馈与贡献
-- 欢迎提交 [Issue](https://gitee.com/qingyingxbot/Poke-plugin/issues) 反馈问题或建议
-- 欢迎PR贡献代码，完善功能
-
----
+## 💬 问题反馈
+如有任何问题，欢迎提交 [Issue](https://gitee.com/qingyingxbot/Poke-plugin/issues) | [GitHub Issues](https://github.com/QingYingX-Bot/Poke-plugin/issues) 反馈。
 
 ## 📄 许可证
-
-本项目采用 [MIT 许可证](LICENSE)。
+本项目采用 **MIT 许可证**
 
 ---
