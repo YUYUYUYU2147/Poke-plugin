@@ -4,6 +4,9 @@ import { renderRankImage, renderMyPokeImage, getPluginVersion } from '../resourc
 import { getConfigItem } from '../config/config.js'
 import { getUserNickname, parseTargetId, formatRankList } from './userUtils.js'
 import { validateEvent } from './inputValidator.js'
+import fs from 'fs/promises'
+import path from 'path'
+import os from 'os'
 
 async function formatRankImageData(list, groupId, e, isGlobal = false) {
   const formattedList = []
@@ -19,6 +22,12 @@ async function getRankOutputType() {
   return await getConfigItem('poke.rankOutputType', 'image')
 }
 
+async function saveImageToFile(image) {
+  const filePath = path.join(os.tmpdir(), `poke-rank-${Date.now()}.jpg`)
+  await fs.writeFile(filePath, image)
+  return `file://${filePath}`
+}
+
 async function replyRank(e, title, list, groupId, isGlobal = false) {
   const outputType = await getRankOutputType()
   if (outputType === 'text') {
@@ -29,8 +38,8 @@ async function replyRank(e, title, list, groupId, isGlobal = false) {
     const version = await getPluginVersion()
     const generateTime = new Date().toLocaleString()
     const image = await renderRankImage({ title, list: formattedList, version, generateTime })
-    const base64img = 'base64://' + image.toString('base64')
-    await e.reply(segment.image(base64img))
+    const file = await saveImageToFile(image)
+    await e.reply(segment.image(file))
   }
 }
 
@@ -45,8 +54,8 @@ async function replyMyPokeStats(e, targetId, targetName, isSelf) {
     const version = await getPluginVersion()
     const generateTime = new Date().toLocaleString()
     const image = await renderMyPokeImage({ pokeCount: userStats.pokeCount, bePokedCount: userStats.bePokedCount, nickname: targetName, version, generateTime })
-    const base64img = 'base64://' + image.toString('base64')
-    await e.reply(segment.image(base64img))
+    const file = await saveImageToFile(image)
+    await e.reply(segment.image(file))
   }
 }
 
@@ -65,7 +74,7 @@ export class PokeRankCommand extends plugin {
         { reg: '^#?(今日被戳戳榜|今日被poke榜)(\d+)?$', fnc: 'showGroupBePokedDayRank' },
         { reg: '^#?(被戳戳总榜|被poke总榜)(\d+)?$', fnc: 'showGlobalBePokedRank' },
         { reg: '^#?(查询戳戳|查询poke)(?:[\s@]+(\d+))?$', fnc: 'showMyPokeStats' },
-        { reg: '^#?(戳戳帮助|poke帮助)$', fnc: 'showHelp' }
+        { reg: '^#?(戳戳榜帮助|戳戳帮助|poke帮助)$', fnc: 'showHelp' }
       ]
     })
   }

@@ -1,0 +1,11 @@
+poke:
+  rankOutputType: image
+  expireDay: 0
+  defaultRankLimit: 15
+  ignoreSelfPoke: true
+pokeIgnored_list: []
+render:
+  rankWidth: 500
+  myPokeWidth: 400
+  cacheEnabled: true
+  cacheExpire: 300000

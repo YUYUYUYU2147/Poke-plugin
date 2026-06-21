@@ -58,7 +58,11 @@ export async function renderHtmlImage({ template, data, width, type = 'common', 
       return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, container ? container.scrollHeight + 64 : 0)
     })
     await page.setViewport({ ...viewport, height: bodyHeight })
-    const screenshotOptions = { type: 'png', fullPage: renderConfig.screenshot?.fullPage || false }
+    const screenshotOptions = { 
+      type: 'jpeg', 
+      quality: 75,
+      fullPage: renderConfig.screenshot?.fullPage || false 
+    }
     const image = await page.screenshot(screenshotOptions)
     return image
   } finally {

@@ -19,10 +19,10 @@ pokeIgnored_list: []
 
 render:
   # 榜单图片宽度
-  rankWidth: 600
+  rankWidth: 500
   
   # 个人统计图片宽度
-  myPokeWidth: 500
+  myPokeWidth: 400
   
   # 是否启用模板缓存
   cacheEnabled: true
